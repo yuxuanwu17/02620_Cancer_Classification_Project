@@ -226,3 +226,10 @@ if __name__ == '__main__':
 
     y_pred = model.predict(X_val)
     print(f'Accuracy for self built model {accuracy_score(y_val, y_pred)}')
+
+    from sklearn.tree import DecisionTreeClassifier
+
+    model = DecisionTreeClassifier(max_depth=10)
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_val)
+    print(f'Accuracy for sklearn Decision Tree {accuracy_score(y_val, y_pred)}')
