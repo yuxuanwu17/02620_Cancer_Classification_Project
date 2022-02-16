@@ -78,8 +78,9 @@ class DecisionTreeClassifier:
     def cross_entropy(self, probas):
         """
         Calculates the mutual information gain criterion (entropy)
-        :return:
+        :return: cross entropy value
         """
+        # epsilon is required for
         epsilon = 0.000001
         return -np.sum(probas * np.log2(probas + epsilon))
 
@@ -173,29 +174,18 @@ class DecisionTreeClassifier:
         """
 
         # Check the terminal condition
-        if node.depth >= self.max_depth:
-            node.is_terminal = True
-            return
+        check_before_split = node.depth >= self.max_depth or len(X) < self.min_samples_split or len(np.unique(y)) == 0
 
-        # ensure the number of X satisfy the minimum of sample split
-        if len(X) < self.min_samples_split:
-            node.is_terminal = True
-            return
-
-        # check the label (class)
-        if len(np.unique(y)) == 0:
+        if check_before_split:
             node.is_terminal = True
             return
 
         best_split_col, best_threshold, X_left, X_right, y_left, y_right = self.find_best_split(X, y)
 
-        # check the requirements of the split col
-        if best_split_col == None:
-            node.is_terminal = True
-            return
+        check_after_split = best_split_col == None or len(X_left) < self.min_samples_leaf or len(
+            X_right) < self.min_samples_leaf
 
-        # check the requirements of the min_samples_leaf
-        if len(X_left) < self.min_samples_leaf or len(X_right) < self.min_samples_leaf:
+        if check_after_split:
             node.is_terminal = True
             return
 
