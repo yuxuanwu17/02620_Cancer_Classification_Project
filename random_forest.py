@@ -8,7 +8,7 @@ class RandomForest():
 
         :param n_trees: number of uncorrelated trees we ensemble to create the random forest
         :param n_features:  the number of features to sample and pass onto the tree
-        :param sample_size: the number of features to sample and pass onto each tree
+        :param sample_size: the number of rows randomly selected and pass onto each tree
         :param depth:
         :param min_leaf:
         """
@@ -41,7 +41,9 @@ class RandomForest():
         return DTrees
 
     def predict(self, X):
-        return np.mean([t.predict(X) for t in self.trees], axis=0)
+        pred = [t.predict(X) for t in self.trees]
+        res = np.mean(pred,axis=0)
+        return res
 
     def fit(self, X, y):
 
@@ -85,7 +87,7 @@ if __name__ == '__main__':
 
     from sklearn.ensemble import RandomForestClassifier
 
-    # model = RandomForestClassifier()
-    # model.fit(X_train, y_train)
-    # y_pred = model.predict(X_val)
-    # print(f'Accuracy for sklearn Random Forest {accuracy_score(y_val, y_pred)}')
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_val)
+    print(f'Accuracy for sklearn Random Forest {accuracy_score(y_val, y_pred)}')
