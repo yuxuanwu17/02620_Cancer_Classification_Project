@@ -22,7 +22,7 @@ class Node:
         self.is_terminal = False
 
 
-class DecisionTreeClassifier:
+class DecisionTreeClassifierImpl:
     def __init__(self, max_depth=3, min_samples_leaf=1, min_samples_split=2, criterion="gini"):
         """
         :param max_depth:
