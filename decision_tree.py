@@ -278,13 +278,13 @@ if __name__ == '__main__':
 
     X_train, X_val, y_train, y_val = train_test_split(X, y, random_state=44)
 
-    model = DecisionTreeClassifier(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="gini")
+    model = DecisionTreeClassifierImpl(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="gini")
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_val)
     print(f'Accuracy for self built model with gini {accuracy_score(y_val, y_pred)}')
 
-    model = DecisionTreeClassifier(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="entropy")
+    model = DecisionTreeClassifierImpl(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="entropy")
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_val)
@@ -292,7 +292,7 @@ if __name__ == '__main__':
 
     from sklearn.tree import DecisionTreeClassifier
 
-    model = DecisionTreeClassifier(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="entropy")
+    model = DecisionTreeClassifierImpl(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="entropy")
     model.fit(X_train, y_train)
     y_pred = model.predict(X_val)
     print(f'Accuracy for sklearn Decision Tree {accuracy_score(y_val, y_pred)}')
