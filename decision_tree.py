@@ -22,8 +22,8 @@ class Node:
         self.is_terminal = False
 
 
-class DecisionTreeClassifier:
-    def __init__(self, max_depth=3, min_samples_leaf=1, min_samples_split=2):
+class DecisionTreeClassifierImpl:
+    def __init__(self, max_depth=3, min_samples_leaf=1, min_samples_split=2, criterion="gini"):
         """
         :param max_depth:
         The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples.
@@ -44,6 +44,9 @@ class DecisionTreeClassifier:
 
         # Decision tree itself
         self.Tree = None
+
+        # Define the criterion
+        self.criterion = criterion
 
     def node_probas(self, y):
         """
@@ -72,14 +75,14 @@ class DecisionTreeClassifier:
 
         return 1 - np.sum(probas ** 2)
 
-    def entropy(self):
+    def cross_entropy(self, probas):
         """
         Calculates the mutual information gain criterion (entropy)
-
-        :return:
+        :return: cross entropy value
         """
-
-        pass
+        # epsilon is required for
+        epsilon = 0.000001
+        return -np.sum(probas * np.log2(probas + epsilon))
 
     def calculate_impurity(self, y):
         """
@@ -90,7 +93,11 @@ class DecisionTreeClassifier:
         :return: gini criterion
         """
 
-        return self.gini(self.node_probas(y))
+        if self.criterion == "gini":
+            return self.gini(self.node_probas(y))
+
+        if self.criterion == "entropy":
+            return self.cross_entropy(self.node_probas(y))
 
         pass
 
@@ -147,7 +154,7 @@ class DecisionTreeClassifier:
                     best_threshold = inner_threshold
 
         if best_info_gain == float('-inf'):
-            return None, None, None, None, None, None, None
+            return None, None, None, None, None, None
 
         # identify the best split and the regarding x, y data in each branch
         X_col = X[:, best_split_col]
@@ -167,29 +174,18 @@ class DecisionTreeClassifier:
         """
 
         # Check the terminal condition
-        if node.depth >= self.max_depth:
-            node.is_terminal = True
-            return
+        check_before_split = node.depth >= self.max_depth or len(X) < self.min_samples_split or len(np.unique(y)) == 0
 
-        # ensure the number of X satisfy the minimum of sample split
-        if len(X) < self.min_samples_split:
-            node.is_terminal = True
-            return
-
-        # check the label (class)
-        if len(np.unique(y)) == 0:
+        if check_before_split:
             node.is_terminal = True
             return
 
         best_split_col, best_threshold, X_left, X_right, y_left, y_right = self.find_best_split(X, y)
 
-        # check the requirements of the split col
-        if best_split_col == None:
-            node.is_terminal = True
-            return
+        check_after_split = best_split_col == None or len(X_left) < self.min_samples_leaf or len(
+            X_right) < self.min_samples_leaf
 
-        # check the requirements of the min_samples_leaf
-        if len(X_left) < self.min_samples_leaf or len(X_right) < self.min_samples_leaf:
+        if check_after_split:
             node.is_terminal = True
             return
 
@@ -282,8 +278,21 @@ if __name__ == '__main__':
 
     X_train, X_val, y_train, y_val = train_test_split(X, y, random_state=44)
 
-    model = DecisionTreeClassifier(max_depth=10, min_samples_leaf=2, min_samples_split=2)
+    model = DecisionTreeClassifierImpl(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="gini")
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_val)
-    print(f'Accuracy for self built model {accuracy_score(y_val, y_pred)}')
+    print(f'Accuracy for self built model with gini {accuracy_score(y_val, y_pred)}')
+
+    model = DecisionTreeClassifierImpl(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="entropy")
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_val)
+    print(f'Accuracy for self built model with cross entropy {accuracy_score(y_val, y_pred)}')
+
+    from sklearn.tree import DecisionTreeClassifier
+
+    model = DecisionTreeClassifierImpl(max_depth=10, min_samples_leaf=2, min_samples_split=2, criterion="entropy")
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_val)
+    print(f'Accuracy for sklearn Decision Tree {accuracy_score(y_val, y_pred)}')
