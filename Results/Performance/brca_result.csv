@@ -1,0 +1,7 @@
+model - feature selection,accuracy,roc_auc_score,log_loss,recall,precision,f1_score,matthews_corrcoef
+logistic regression - k best,0.9852 ,0.9965 ,0.0525 ,0.949494949,0.878504673,0.9126 ,0.905370616
+logistic regression - deg,0.9932 ,0.9995 ,0.0196 ,0.95959596,0.95959596,0.9596 ,0.955888823
+decision tree - k best,0.9696 ,0.8730 ,1.0501 ,0.757575758,0.852272727,0.8021 ,0.78733337
+decision tree - deg,0.9873 ,0.9518 ,0.4398 ,0.909090909,0.9375,0.9231 ,0.916266373
+adaboost - k best,0.9803 ,0.9942 ,0.2512 ,0.898989899,0.86407767,0.8812 ,0.87064303
+adaboost - deg,0.9941 ,0.9995 ,0.1141 ,0.95959596,0.969387755,0.9645 ,0.961239602

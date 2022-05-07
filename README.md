@@ -1,6 +1,13 @@
-# Course Project - Machine Learning For Scientist 
+# Course Project of Group 1 - Cancer classification using machine learning
+This is the course project for 02-620: Machine Learning For Scientist in Spring 2022. And oour project is about cancer classification using machine learning.
 
-## Required Library
+## Group members
+- Yuxuan Wu
+- Eric Li
+- Yifan Wu
+- Xin Wang
+
+## Dependencies (only for model implementation section)
 
 - Python3
 - scikit-learn
@@ -8,48 +15,48 @@
 - numpy
 - pytorch
 
-All the jupyter notebook are self-contained and runnable!
+All jupyter notebooks are self-contained and runnable!
 
-## Original Dataset (too large to include)
+## Original Datasets (too large to include)
 
-https://xenabrowser.net/datapages/?cohort=GDC%20TCGA%20Breast%20Cancer%20(BRCA)&removeHub=https%3A%2F%2Fxena.treehouse.gi.ucsc.edu%3A443
+[BRCA](https://xenabrowser.net/datapages/?dataset=TCGA-BRCA.htseq_counts.tsv&host=https%3A%2F%2Fgdc.xenahubs.net&removeHub=https%3A%2F%2Fxena.treehouse.gi.ucsc.edu%3A443)
+[LUAD](https://xenabrowser.net/datapages/?dataset=TCGA-LUAD.htseq_counts.tsv&host=https%3A%2F%2Fgdc.xenahubs.net&removeHub=https%3A%2F%2Fxena.treehouse.gi.ucsc.edu%3A443)
 
-## Self Implemented Machine Learning Algorithm
+## Data preprocessing and DGE
+We used R to perform Differential Gene Expression (DGE), which is one of our feature selection methods. And the other is `selectKBest` function in Python.
 
-    self-implemented decision tree model: decision_tree.ipynb
-    self-implemented adaboost model: adaboost.ipynb
+R scripts are under `./Pre-processing_and_DGE`
+
+## Models
+
+### Self Implemented Machine Learning Algorithm (Decision Tree and AdaBoost)
+
+    self-implemented decision tree model: ./Model/Decision_tree/decision_tree.ipynb
+    self-implemented adaboost model: ./Model/AdaBoost/adaboost.ipynb
     
+### MLP with Pytorch
 
-## MLP with Pytorch
+    ./Model/MLP
 
-    BRCA_DEG_DL.ipynb     
-    LUAD_DEG_DL.ipynb
-    
-    BRCA_select_DL.ipynb  
-    LUAD_select_DL.ipynb
+## Follow-Up Evaluation and Results
 
-## Follow-Up Testing and Analysis
+### Model evaluation scripts
 
-Model Performance Measure:
+    ./Performance
 
-    model_test_brca.ipynb
-    model_test_luad.ipynb
+### Model evaluation results
 
-Model Performance Measure Result (in ./results directory):
-    
-    luad_result.csv
-    brca_result.csv
-    
-Model Interpretation:
+    ./Results/Performance
 
-    feature_importance_brca.ipynb
-    feature_importance_luad.ipynb
+### Feature selection scripts
 
-Model Interpretation Result (in ./results directory):
+    ./Feature_importance
 
-    decision_tree_importance_gene_brca.csv
-    decision_tree_importance_gene_brca.csv
+### Feature selection results
 
-## DEG data preprocessing
+    ./Results/Feature_importance
 
-./Pre-processing_and_DGE
+
+## Additional plots that didn't contain in the report because of page limit
+
+    ./Results/Additional_plots
