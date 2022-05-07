@@ -20,12 +20,13 @@ All jupyter notebooks are self-contained and runnable!
 ## Original Datasets (too large to include)
 
 [BRCA](https://xenabrowser.net/datapages/?dataset=TCGA-BRCA.htseq_counts.tsv&host=https%3A%2F%2Fgdc.xenahubs.net&removeHub=https%3A%2F%2Fxena.treehouse.gi.ucsc.edu%3A443)
+
 [LUAD](https://xenabrowser.net/datapages/?dataset=TCGA-LUAD.htseq_counts.tsv&host=https%3A%2F%2Fgdc.xenahubs.net&removeHub=https%3A%2F%2Fxena.treehouse.gi.ucsc.edu%3A443)
 
 ## Data preprocessing and DGE
 We used R to perform Differential Gene Expression (DGE), which is one of our feature selection methods. And the other is `selectKBest` function in Python.
 
-R scripts are under `./Pre-processing_and_DGE`
+R scripts are under `./Preprocessing_and_DGE`
 
 ## Models
 
