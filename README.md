@@ -60,4 +60,4 @@ R scripts are under `./Preprocessing_and_DGE`
 
 ## Additional plots that didn't contain in the report because of page limit
 
-    ./Results/Additional_plots
+    ./Additional_plots
